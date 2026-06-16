@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xinergia Store | Tu tienda virtual inteligente</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i> Xinergia <span>Store</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showSection('home')">Inicio</a></li>
+                <li><a href="#" onclick="showSection('catalog')">Productos</a></li>
+                <li><a href="#" onclick="toggleCart()">Carrito <span id="cart-count" class="badge">0</span></a></li>
+                <li><a href="#" onclick="showSection('admin')">Admin</a></li>
+            </ul>
+            <button class="btn-primary" style="display: flex; align-items: center; gap: 0.5rem;" onclick="window.open('https://wa.me/51940174022?text=Hola,%20quisiera%20solicitar%20una%20demo%20del%20sistema%20ecommerce.', '_blank')">
+                <i class="fab fa-whatsapp" style="font-size: 1.2rem;"></i> Solicita una demo
+            </button>
+            <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="#" onclick="showSection('home'); toggleMenu()">Inicio</a>
+            <a href="#" onclick="showSection('catalog'); toggleMenu()">Productos</a>
+            <a href="#" onclick="toggleCart(); toggleMenu()">Carrito (<span id="mobile-cart-count">0</span>)</a>
+            <a href="#" onclick="showSection('admin'); toggleMenu()">Admin</a>
+        </div>
+    </nav>
+
+    <!-- Notificaciones Toast -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Botón de carrito flotante -->
+    <button class="floating-cart-btn" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="floating-cart-count" class="floating-badge">0</span>
+    </button>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <!-- HOME SECTION -->
+        <section id="home" class="view-section active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>Tu tienda virtual inteligente</h1>
+                    <p>Optimiza tus procesos y lleva tu empresa al siguiente nivel con las mejores herramientas de software y hardware corporativo diseñadas para ti.</p>
+                    <div class="hero-buttons">
+                        <button class="btn-primary btn-large" onclick="showSection('catalog')"><i class="fas fa-rocket"></i> Empezar ahora</button>
+                        <button class="btn-secondary btn-large" onclick="showSection('catalog')">Ver productos</button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="hero-mockup-container">
+                        <div class="hero-mockup">
+                            <div class="mockup-header">
+                                <div class="mac-dot red"></div>
+                                <div class="mac-dot yellow"></div>
+                                <div class="mac-dot green"></div>
+                            </div>
+                            <div class="mockup-body">
+                                <div class="mockup-sidebar">
+                                    <div class="m-line short"></div>
+                                    <div class="m-line"></div>
+                                    <div class="m-line"></div>
+                                    <div class="m-line"></div>
+                                </div>
+                                <div class="mockup-main">
+                                    <div class="m-cards">
+                                        <div class="m-card"><i class="fas fa-chart-line"></i><div class="m-line short mt-1"></div></div>
+                                        <div class="m-card"><i class="fas fa-shopping-bag"></i><div class="m-line short mt-1"></div></div>
+                                    </div>
+                                    <div class="m-chart">
+                                        <div class="m-bar h-60"></div>
+                                        <div class="m-bar h-100"></div>
+                                        <div class="m-bar h-40"></div>
+                                        <div class="m-bar h-80"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Floating Badges -->
+                        <div class="float-badge fb-1">
+                            <div class="fb-icon"><i class="fas fa-arrow-up"></i></div>
+                            <div>
+                                <p>+45%</p>
+                                <span>Conversión</span>
+                            </div>
+                        </div>
+                        <div class="float-badge fb-2">
+                            <div class="fb-icon"><i class="fas fa-shield-alt"></i></div>
+                            <div>
+                                <p>Seguro</p>
+                                <span>SSL 256-bit</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATALOG SECTION -->
+        <section id="catalog" class="view-section">
+            <div class="container">
+                <div class="catalog-header">
+                    <div>
+                        <h2 class="section-title m-0">Catálogo de Productos</h2>
+                        <p>Encuentra el software y hardware ideal para tu empresa con soporte técnico garantizado.</p>
+                    </div>
+                    <div class="catalog-header-badge">
+                        <i class="fas fa-shield-alt"></i> Compra 100% Segura
+                    </div>
+                </div>
+                
+                <div class="catalog-layout">
+                    <!-- SIDEBAR -->
+                    <aside class="catalog-sidebar">
+                        <div class="sidebar-widget">
+                            <h3><i class="fas fa-search"></i> Buscar</h3>
+                            <div class="filter-search-icon">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search-input" placeholder="Ej. Lector 2D...">
+                            </div>
+                        </div>
+
+                        <div class="sidebar-widget">
+                            <h3><i class="fas fa-tags"></i> Categorías</h3>
+                            <ul class="category-list">
+                                <li>
+                                    <label class="custom-radio">
+                                        <input type="radio" name="cat-filter" value="all" checked onchange="document.getElementById('category-filter').value=this.value; filterProducts();">
+                                        <span>Todas las categorías</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="custom-radio">
+                                        <input type="radio" name="cat-filter" value="Software" onchange="document.getElementById('category-filter').value=this.value; filterProducts();">
+                                        <span>Software</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="custom-radio">
+                                        <input type="radio" name="cat-filter" value="Hardware" onchange="document.getElementById('category-filter').value=this.value; filterProducts();">
+                                        <span>Hardware</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="custom-radio">
+                                        <input type="radio" name="cat-filter" value="Servicios" onchange="document.getElementById('category-filter').value=this.value; filterProducts();">
+                                        <span>Servicios</span>
+                                    </label>
+                                </li>
+                            </ul>
+                            <!-- Hidden select for compatibility with app.js -->
+                            <select id="category-filter" style="display:none;">
+                                <option value="all">all</option>
+                                <option value="Software">Software</option>
+                                <option value="Hardware">Hardware</option>
+                                <option value="Servicios">Servicios</option>
+                            </select>
+                        </div>
+
+                        <div class="sidebar-widget">
+                            <h3><i class="fas fa-money-bill-wave"></i> Precio Máximo</h3>
+                            <div class="price-slider-container">
+                                <input type="range" id="price-range" min="0" max="5000" step="100" value="5000" oninput="updatePriceLabel(this.value)" onchange="filterProducts()">
+                                <p class="price-label">Hasta: $<span id="price-val">5,000.00</span></p>
+                            </div>
+                        </div>
+
+                        <div class="sidebar-widget">
+                            <h3><i class="fas fa-sort-amount-down"></i> Ordenar por</h3>
+                            <select id="sort-filter" class="custom-select w-100">
+                                <option value="name-asc">Nombre (A-Z)</option>
+                                <option value="name-desc">Nombre (Z-A)</option>
+                                <option value="price-asc">Menor Precio</option>
+                                <option value="price-desc">Mayor Precio</option>
+                            </select>
+                        </div>
+                    </aside>
+
+                    <!-- MAIN CONTENT -->
+                    <div class="catalog-main">
+                        <div class="products-grid" id="products-grid">
+                            <!-- Productos renderizados por JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CARTRITO MOVIDO A OFFCANVAS -->
+
+        <!-- ADMIN SECTION -->
+        <section id="admin" class="view-section">
+            <div class="container admin-container">
+                <h2 class="section-title">Panel de Administración</h2>
+                
+                <div class="dashboard-cards">
+                    <div class="dash-card">
+                        <div class="icon"><i class="fas fa-dollar-sign"></i></div>
+                        <div class="info">
+                            <h4>Ventas</h4>
+                            <p id="dash-sales">$0.00</p>
+                        </div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="icon"><i class="fas fa-shopping-bag"></i></div>
+                        <div class="info">
+                            <h4>Pedidos</h4>
+                            <p id="dash-orders">0</p>
+                        </div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="icon"><i class="fas fa-box"></i></div>
+                        <div class="info">
+                            <h4>Productos</h4>
+                            <p id="dash-products">12</p>
+                        </div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="icon"><i class="fas fa-users"></i></div>
+                        <div class="info">
+                            <h4>Clientes</h4>
+                            <p id="dash-customers">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-tabs">
+                    <button class="tab-btn active" onclick="switchAdminTab('admin-products')">Productos</button>
+                    <button class="tab-btn" onclick="switchAdminTab('admin-orders')">Pedidos</button>
+                </div>
+
+                <div id="admin-products" class="admin-tab-content active">
+                    <div class="flex-between mb-2">
+                        <h3>Gestión de Productos</h3>
+                        <button class="btn-primary" onclick="openProductModal()"><i class="fas fa-plus"></i> Nuevo Producto</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Categoría</th>
+                                    <th>Precio</th>
+                                    <th>Stock</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-products-list">
+                                <!-- Rendered by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="admin-orders" class="admin-tab-content">
+                    <h3>Registro de Pedidos</h3>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>N° Pedido</th>
+                                    <th>Cliente</th>
+                                    <th>Fecha</th>
+                                    <th>Total</th>
+                                    <th>Método Pago</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-orders-list">
+                                <!-- Rendered by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="footer-col">
+                <div class="logo mb-2">
+                    <i class="fas fa-chart-line"></i> Xinergia <span>Store</span>
+                </div>
+                <p>Tu aliado estratégico en tecnología y procesos. Brindamos soluciones empresariales de vanguardia para llevar tu empresa al siguiente nivel.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="#" onclick="showSection('home')">Inicio</a></li>
+                    <li><a href="#" onclick="showSection('catalog')">Catálogo</a></li>
+                    <li><a href="#" onclick="showSection('admin')">Administración</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p><i class="fas fa-envelope"></i> ventas@xinergia.com</p>
+                <p><i class="fas fa-phone"></i> +51 999 888 777</p>
+                <p><i class="fas fa-map-marker-alt"></i> Lima, Perú</p>
+            </div>
+            <div class="footer-col">
+                <h4>Síguenos</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Xinergia Inteligencia Empresarial. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- CART OFFCANVAS -->
+    <div id="cart-overlay" class="cart-overlay" onclick="toggleCart()"></div>
+    <div id="cart-offcanvas" class="cart-offcanvas">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Mi Carrito</h3>
+            <span class="close-cart" onclick="toggleCart()">&times;</span>
+        </div>
+        <div class="cart-body">
+            <div id="cart-list" class="cart-items-container">
+                <!-- Items renderizados por JS -->
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="summary-line">
+                <span>Subtotal:</span>
+                <span id="cart-subtotal">$0.00</span>
+            </div>
+            <div class="summary-line">
+                <span>IGV (18%):</span>
+                <span id="cart-igv">$0.00</span>
+            </div>
+            <div class="summary-line total">
+                <span>Total:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <button class="btn-primary w-100 mt-2" onclick="openCheckoutModal()"><i class="fas fa-lock"></i> Proceder al Pago</button>
+            <button class="btn-secondary w-100 mt-2" onclick="toggleCart()">Seguir Comprando</button>
+        </div>
+    </div>
+
+    <!-- MODALS -->
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content checkout-modal-content">
+            <span class="close-btn" onclick="closeModal('checkout-modal')">&times;</span>
+            <h2 class="mb-2"><i class="fas fa-lock"></i> Pago Seguro</h2>
+            
+            <div class="checkout-grid">
+                <div class="checkout-form-section">
+                    <form id="checkout-form" onsubmit="submitCheckout(event)">
+                        <!-- PASO 1 -->
+                        <div id="checkout-step-1" class="checkout-step">
+                            <h3>1. Datos de Facturación</h3>
+                            <div class="form-row">
+                                <div class="form-group w-100">
+                                    <label>Nombre Completo</label>
+                                    <div class="input-icon">
+                                        <i class="fas fa-user"></i>
+                                        <input type="text" id="chk-name" required placeholder="Ej. Juan Pérez">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group flex-1">
+                                    <label>Correo Electrónico</label>
+                                    <div class="input-icon">
+                                        <i class="fas fa-envelope"></i>
+                                        <input type="email" id="chk-email" required placeholder="juan@empresa.com">
+                                    </div>
+                                </div>
+                                <div class="form-group flex-1">
+                                    <label>Teléfono</label>
+                                    <div class="input-icon">
+                                        <i class="fas fa-phone"></i>
+                                        <input type="text" id="chk-phone" required placeholder="+51 999 888 777">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Dirección de Envío</label>
+                                <div class="input-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <input type="text" id="chk-address" required placeholder="Av. Principal 123, Lima">
+                                </div>
+                            </div>
+                            <button type="button" class="btn-primary w-100 btn-large mt-2" onclick="nextCheckoutStep()">Continuar al Pago <i class="fas fa-arrow-right"></i></button>
+                        </div>
+
+                        <!-- PASO 2 -->
+                        <div id="checkout-step-2" class="checkout-step" style="display: none;">
+                            <h3 class="mb-2">2. Método de Pago</h3>
+                            <div class="payment-methods">
+                                <label class="pay-method active" onclick="selectPayment(this, 'Tarjeta')">
+                                    <i class="fas fa-credit-card"></i> Tarjeta
+                                </label>
+                                <label class="pay-method" onclick="selectPayment(this, 'Yape')">
+                                    <i class="fas fa-qrcode"></i> Yape
+                                </label>
+                                <label class="pay-method" onclick="selectPayment(this, 'Plin')">
+                                    <i class="fas fa-mobile-alt"></i> Plin
+                                </label>
+                                <label class="pay-method" onclick="selectPayment(this, 'Transferencia')">
+                                    <i class="fas fa-university"></i> Transferencia
+                                </label>
+                                <input type="hidden" id="chk-payment" value="Tarjeta">
+                            </div>
+
+                            <div id="payment-details-container" class="payment-details-container mt-2">
+                                <!-- Aquí se inyectan los campos -->
+                            </div>
+
+                            <div class="form-row mt-2" style="gap: 1rem;">
+                                <button type="button" class="btn-secondary w-100 btn-large" onclick="prevCheckoutStep()"><i class="fas fa-arrow-left"></i> Atrás</button>
+                                <button type="submit" class="btn-primary w-100 btn-large">Confirmar <span id="chk-total-btn">$0.00</span></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="checkout-summary-section">
+                    <h3>Resumen de tu pedido</h3>
+                    <div id="chk-summary-items" class="chk-items-list">
+                        <!-- Items rendered here via JS -->
+                    </div>
+                    <div class="chk-totals mt-2">
+                        <div class="summary-line">
+                            <span>Subtotal:</span>
+                            <span id="chk-subtotal">$0.00</span>
+                        </div>
+                        <div class="summary-line">
+                            <span>IGV (18%):</span>
+                            <span id="chk-igv">$0.00</span>
+                        </div>
+                        <div class="summary-line total">
+                            <span>Total a Pagar:</span>
+                            <span id="chk-total">$0.00</span>
+                        </div>
+                    </div>
+                    <div class="security-badges mt-2">
+                        <p><i class="fas fa-shield-alt"></i> Compra 100% Segura y Encriptada</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal">
+        <div class="modal-content text-center">
+            <span class="close-btn" onclick="closeModal('success-modal')">&times;</span>
+            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+            <h2>¡Compra Exitosa!</h2>
+            <p>Tu pedido ha sido procesado correctamente.</p>
+            <p><strong>Número de Pedido:</strong> <span id="success-order-id"></span></p>
+            <button class="btn-primary mt-2" onclick="closeSuccessModal()">Volver al Inicio</button>
+        </div>
+    </div>
+
+    <!-- Product Admin Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('product-modal')">&times;</span>
+            <h2 id="product-modal-title">Agregar Producto</h2>
+            <form id="product-form" onsubmit="saveProduct(event)">
+                <input type="hidden" id="prod-id">
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" id="prod-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Categoría</label>
+                    <select id="prod-category" required>
+                        <option value="Software">Software</option>
+                        <option value="Hardware">Hardware</option>
+                        <option value="Servicios">Servicios</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Precio ($)</label>
+                    <input type="number" id="prod-price" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>Stock</label>
+                    <input type="number" id="prod-stock" required>
+                </div>
+                <div class="form-group">
+                    <label>URL Imagen</label>
+                    <input type="text" id="prod-image" required placeholder="https://placehold.co/400x300...">
+                </div>
+                <button type="submit" class="btn-primary w-100">Guardar Producto</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
